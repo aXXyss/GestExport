@@ -1,0 +1,112 @@
+{% extends 'core/base.html' %}
+
+{% load i18n %}
+
+{% load static %}
+{% block title %}Exportations{% endblock %}
+
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        <!-- Sidebar -->
+        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white">
+                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-sm-start" id="menu">
+                    <li><hr class="dropdown-divider"></li>
+                    <li class="nav-item">
+                        <div class="dropdown pb-1 pt-1">
+                            <a href="#" class="nav-link align-middle px-0 link-secondary text-decoration-none dropdown-toggle" id="submenu1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="{% static 'core/img/transport.png' %}" alt="Liste Transports Sciages" width="30" height="30" class="fs-4">
+                                <span class="ms-1 d-none d-sm-inline">Transport</span> 
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="submenu1">
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'betou:transport_list' %}">
+                                        <span class="ms-1 d-none d-sm-inline">Liste des Transports Sciages</span> 
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'betou:transport_gr_list' %}">
+                                        <span class="ms-1 d-none d-sm-inline">Liste des Transports Grumes</span> 
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li class="nav-item">
+                        <div class="dropdown pb-1 pt-1">
+                            <a href="#" class="nav-link align-middle px-0 link-secondary text-decoration-none dropdown-toggle" id="submenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="{% static 'core/img/specifications.png' %}" alt="Spécifications" width="30" height="30" class="fs-4">
+                                <span class="ms-1 d-none d-sm-inline">Spécifications</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="submenu2">
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'betou:specification_list' %}">
+                                        <span class="ms-1 d-none d-sm-inline">Spécifs Sciages</span> 
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{% url 'betou:specification_gr_list' %}">
+                                        <span class="ms-1 d-none d-sm-inline">Spécifs Grumes</span> 
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li class="nav-item">
+                        <div class="dropdown pb-1 pt-1">
+                            <a href="#" class="nav-link align-middle px-0 link-secondary text-decoration-none dropdown-toggle" id="submenu3" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="{% static 'core/img/embarquements.png' %}" alt="Embarquements" width="30" height="30" class="fs-4">
+                                <span class="ms-1 d-none d-sm-inline">Embarquements</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="submenu3">
+                                <li><a class="dropdown-item" href="#">Sciages</a></li>
+                                <li><a class="dropdown-item" href="#">Grumes</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li class="nav-item">
+                        <div class="dropdown pb-1 pt-1">
+                            <a href="#" class="nav-link align-middle px-0 link-secondary text-decoration-none dropdown-toggle" id="submenu3" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="{% static 'core/img/stocks.png' %}" alt="Stocks" width="30" height="30" class="fs-4">
+                                <span class="ms-1 d-none d-sm-inline">Stocks</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="submenu3">
+                                <li><a class="dropdown-item" href="#">Sciages</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Grumes</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Divers</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                </ul>
+                <hr>
+            </div>
+        </div>
+        <!-- END Sidebar -->
+
+        <!-- Content -->
+        <div class="col py-5 col-md-4 offset-md-1">
+            <h3 class="text-decoration-underline">Menu - DOUALA</h3>
+            <br>
+            <ul class="list-unstyled">
+                <li><h5>Transports</h5> Transports Colis de Sciages, Grumes - Réception Transports, etc...</li>
+                <br>
+                <li><h5>Embarquements</h5> Embarquements, etc...</li>
+                <br>
+                <li><h5>Stocks</h5> Stocks aux différents Parcs de Douala, etc...</li>
+                <br>
+            </ul>
+        </div>
+        <!-- END Content -->
+    </div>
+</div>
+{% endblock %}

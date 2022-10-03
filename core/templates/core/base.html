@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}{% endblock %}</title>
+    {% load static %}
+    <!-- Fuentes -->
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,400i,700,700i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet">
+    <!-- Estilos -->
+
+    <link href="{% static 'core/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'core/vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <link  href="{% static 'core/vendor/font/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'core/css/main.css' %}" rel="stylesheet">
+        
+    
+  </head>
+  <body>
+
+    {% if not is_popup %}
+      <!-- Navegación -->
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container-fluid">
+          <img src="{% static 'logo.png' %}" alt="logo" width="60">
+          <a class="navbar-brand" href="{% url 'home' %}"> &nbsp; GestExport</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#ned" aria-controls="ned" aria-expanded="false">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="ned">
+            <ul class="navbar-nav me-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'home' %}">Home</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Exploitation</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item disabled" href="#">Prospections</a>     <!-- option 'disabled' for the link -->
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item disabled" href="#">Forêt</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item disabled" href="#">Grumes</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item disabled" href="#">Sciages</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="{% url 'douala:douala' %}">Douala</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item disabled" href="#">Inventaires</a>
+                </div>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'tables:tables' %}">Tables Générales</a>
+              </li>vh-100rl 'profiles:list' %}">Profils</a>
+              </li>
+            </ul>
+            <ul class="navbar-nav">
+              {% if not request.user.is_authenticated %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'login' %}">Se connecter</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'signup' %}">S'inscrire</a>
+                </li>
+              {% else %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'profile' %}">Profil</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'logout' %}">Sortir</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link">- &nbsp;&nbsp;&nbsp;Bienvenu(e) {% firstof user.get_short_name user.get_username %}</a>
+                </li>
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      {% block breadcrumbs %}
+      <!-- Barra de Estado con los enlaces de navigación -->
+          <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #c9cdd2;">
+            <div class="container-fluid">
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#state1" aria-controls="state1" aria-expanded="false">
+              <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="state1">
+                <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    {% if title %}<a class="nav-link" > &rsaquo; &nbsp; {{ title | capfirst  }}</a>{% endif %}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+      {% endblock %}
+
+  {% endif %}
+
+      <!-- Content -->
+      {% block content %}{% endblock %}
+      <!-- END Content -->
+      
+
+      <!-- Pié de página -->
+      <footer class="footer text-faded text-center py-2 text-secondary" style="background-color: #c9cdd2;">
+        <div class="container-fluid">
+          <p class="m-0">
+            {% if LINK_TWITTER %}
+              <a href="{{LINK_TWITTER}}" class="link text-secondary">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            {% endif %}
+            {% if LINK_FACEBOOK %}
+              <a href="{{LINK_FACEBOOK}}" class="link text-secondary">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            {% endif %}
+              {% if LINK_INSTAGRAM %}
+              <a href="{{LINK_INSTAGRAM}}" class="link text-secondary">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            {% endif %}
+        </p>
+        <p class="m-0 mbt">
+            {% load pages_extras %}
+            {% get_page_list as page_list %}
+            {% for page in page_list %}
+              <a href="{% url 'page' page.id page.title|slugify %}" class="link text-secondary">{{page.title}}</a> {% if not forloop.last %} • {% endif %} 
+            {% endfor %}
+        </p>
+        <p class="m-0 mbt1">&copy; GestExport 2022 - aXXyss</p>
+      </div>
+	  </footer>
+
+
+      <!-- Javascript -->
+      <script src="{% static 'core/vendor/jquery/jquery.min.js' %}"></script>
+      <script src="{% static 'core/vendor/bootstrap/js/bootstrap.bundle.js' %}"></script>
+      <script src="{% static 'core/js/main.js' %}"></script>
+
+      <!-- Script para formatear el placeholder en los campos fechas del Form-->
+      <script>
+        $(document).ready(function () {
+            $("#date_field").focus(function () {
+                $(this).prop('type', 'date');
+            });
+    
+            $("#date_field").focusout(function () {
+                $(this).prop('type', 'text');
+    
+            });
+        });
+    </script>
+  </body>
+</html>

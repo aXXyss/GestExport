@@ -1,0 +1,125 @@
+{% extends 'core/base.html' %}
+
+{% load i18n %}
+
+{% load static %}
+{% block title %}Liste des Réceptions Transports Sciages{% endblock %}
+
+{% block breadcrumbs %}
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #c9cdd2;">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#state" aria-controls="state" aria-expanded="false">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="state">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'douala:douala' %}">&rsaquo; &nbsp; Douala</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'douala:transports' %}">&rsaquo; &nbsp; Réceptions</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" > &rsaquo; &nbsp; Sciages</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link link-secondary" href="{% url 'douala:recep_trans_create' %}"> | <i>Réceptionner un Transport</i> |</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    </nav>
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        <!-- Sidebar -->
+        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white">
+                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-sm-start" id="menu">
+                    <li><hr class="dropdown-divider"></li>
+                    <li class="nav-item">
+                        <div class="dropdown pb-1 pt-1">
+                            <a href="{% url 'douala:recep_trans_list' %}" class="nav-link align-middle px-0 link-secondary">
+                                <img src="{% static 'core/img/transport.png' %}" alt="Liste Réception Sciages" width="30" height="30" class="fs-4">
+                                <span class="ms-1 d-none d-sm-inline">Liste des Réceptions</span>
+                            </a>
+                        </div>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li class="nav-item">
+                        <div class="dropdown pb-1 pt-1">
+                            <a href="{% url 'douala:recep_trans_create' %}" class="nav-link align-middle px-0 link-secondary">
+                                <img src="{% static 'core/img/transport.png' %}" alt="Ajouter Réception " width="30" height="30" class="fs-4">
+                                <span class="ms-1 d-none d-sm-inline">Réceptionner un Transport</span>
+                            </a>
+                        </div>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                </ul>
+                <hr>
+            </div>
+        </div>
+        <!-- END Sidebar -->
+
+        <!-- Content -->
+        <div class="col py-5 col-md-8 offset-md-1">
+            <div class="container-fluid">
+                <h3 class="text-decoration-underline">Liste des Réceptions de Transports de Sciages</h3>
+                <br>
+                <table class="table table-responsive table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Code Réception</th>
+                            <th>Code Trans</th>
+                            <th>Date Réception</th>
+                            <th>Lieu</th>
+                            <th>Réceptionnaire</th>
+                            <th>Commentaires</th>
+                            <th class="text-center text-muted fst-italic">Options</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {%if receptranssciages_list%}
+                    {% for recep in receptranssciages_list %}
+                        <tr>
+                            <td><a href="{% url 'douala:recep_trans_update' recep.id_receptranssciages %}" class="link text-secondary">{{recep.code_reception}}</a> {% if not forloop.last %}{% endif %}</td>
+                            <td>{{recep.code_trans.code_trans}}</td>
+                            <td>{{recep.date_recep_trans}}</td>
+                            <td>{{recep.lieu_reception|default_if_none:""}}</td>
+                            <td>{{recep.receptionnaire|default_if_none:""}}</td>
+                            <td>{{recep.commentaires|default_if_none:""}}</td>
+                            <td class="text-center">
+                                <a href="{% url 'douala:recep_trans_create' %}" class="link text-secondary"><i class="bi bi-plus-circle-fill"></i></a>
+                                <a href="{% url 'douala:recep_trans_update' recep.id_receptranssciages %}" class="link text-secondary"><i class="bi bi-pencil-fill"></i></a>
+                                <a href="{% url 'douala:recep_trans_delete' recep.id_receptranssciages %}" class="link text-secondary"><i class="bi bi-trash-fill"></i></a>
+                            
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    {%else%}
+                        <h1>Il n'y a pas d'enregistrements</h1>
+                    {%endif%}
+                    </tbody>
+                </table>
+
+                <!-- Menú de paginación -->
+                {% if is_paginated %}
+                <div id="content-pagination">
+                    {% include 'core/_pagination.html' with page_obj=page_obj %}  
+                </div>
+                {% endif %}  
+            </div>
+        </div>
+        <!-- END Content -->
+    </div>
+</div>
+
+{% endblock %}

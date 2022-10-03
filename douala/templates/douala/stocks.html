@@ -1,0 +1,95 @@
+{% extends 'core/base.html' %}
+
+{% load i18n %}
+
+{% load static %}
+{% block title %}Stocks{% endblock %}
+
+{% block breadcrumbs %}
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #c9cdd2;">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#state" aria-controls="state" aria-expanded="false">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="state">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'douala:douala' %}">&rsaquo; &nbsp; Douala</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" > &rsaquo; &nbsp; Stocks</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    </nav>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        <!-- Sidebar -->
+        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white">
+                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-sm-start" id="menu">
+                    <hr>
+                    <li><hr>S T O C K S<hr></li>
+                    <hr>
+                    <li class="nav-item">
+                        <div class="dropdown pb-1 pt-1">
+                            <a href="#" class="nav-link align-middle px-0 link-secondary text-decoration-none dropdown-toggle" id="submenu1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="{% static 'core/img/stocks.png' %}" alt="Réceptions de Transports Sciages" width="30" height="30" class="fs-4">
+                                <span class="ms-1 d-none d-sm-inline">Sciages</span> 
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="submenu1">
+                                <li><a class="dropdown-item" href="{% url 'douala:stock_roulant_contrats' %}">Roulant</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">À Embarquer</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                            </ul>
+                        </div>
+
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li class="nav-item">
+                        <div class="dropdown pb-1 pt-1">
+                            <a href="#" class="nav-link align-middle px-0 link-secondary text-decoration-none dropdown-toggle" id="submenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="{% static 'core/img/stocks.png' %}" alt="Spécifications" width="30" height="30" class="fs-4">
+                                <span class="ms-1 d-none d-sm-inline">Grumes</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="submenu2">
+                                <li><a class="dropdown-item" href="{% url 'douala:stock_roulant_gr_contrats' %}">Roulant</a> </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">À Embarquer</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                </ul>
+                <hr>
+            </div>
+        </div>
+        <!-- END Sidebar -->
+
+        <!-- Content -->
+        <div class="col py-5 col-md-4 offset-md-1">
+            <h3 class="text-decoration-underline">Gestion des Stocks</h3>
+            <br>
+            <ul class="list-unstyled">
+                <li><h5>Sciages</h5> Stock Roulant, Port</li>
+                <br>
+                <li><h5>Grumes</h5> Stock Roulant, Port</li>
+                <br>
+            </ul>
+        </div>
+        <!-- END Content -->
+    </div>
+</div>
+{% endblock %}

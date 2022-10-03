@@ -1,0 +1,89 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Ajouter Famille{% endblock %}
+
+{% block breadcrumbs %}
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #c9cdd2;">
+      <div class="container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#state" aria-controls="state" aria-expanded="false">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="state">
+              <ul class="navbar-nav me-auto">
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'home' %}">Home</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'tables:tables' %}">&rsaquo; &nbsp; Tables</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'tables:essence_groupe' %}">&rsaquo; &nbsp; Groupes des Essences</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" > &rsaquo; &nbsp; Ajouter</a>
+                  </li>
+              </ul>
+          </div>
+      </div>
+    </nav>
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+  <div class="row flex-nowrap">
+    <!-- Sidebar -->
+    <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+      <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white">
+        <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-sm-start" id="menu">
+          <li><hr class="dropdown-divider"></li>
+          <li class="nav-item me-auto">
+            <div class="dropdown pb-1 pt-1">
+              <a href="{% url 'tables:essences_list' %}" class="nav-link align-middle px-0 link-secondary">
+                <img src="{% static 'core/img/essences.png' %}" alt="Essences" width="30" height="30" class="fs-4">
+                <span class="ms-1 d-none d-sm-inline">Essences</span>
+              </a>
+            </div>
+          </li>
+          <li><hr class="dropdown-divider"></li>
+          <li class="nav-item">
+            <div class="dropdown pb-1 pt-1">
+              <a href="{% url 'tables:essence_famille' %}" class="nav-link align-middle px-0 link-secondary">
+                <img src="{% static 'core/img/foret.png' %}" alt="Chantiers" width="30" height="30" class="fs-4">
+                <span class="ms-1 d-none d-sm-inline">Familles</span>
+              </a>
+            </div>
+          </li>
+          <li><hr class="dropdown-divider"></li>
+          <li class="nav-item">
+            <div class="dropdown pb-1 pt-1">
+              <a href="{% url 'tables:essence_groupe' %}" class="nav-link align-middle px-0 link-secondary">
+                <img src="{% static 'core/img/groupe.png' %}" alt="Chantiers" width="30" height="30" class="fs-4">
+                <span class="ms-1 d-none d-sm-inline">Groupes Essences</span>
+              </a>
+            </div>
+          </li>
+          <li><hr class="dropdown-divider"></li>
+        </ul>
+        <hr>
+      </div>
+    </div>
+    <!-- END Sidebar -->
+
+    <!-- Content -->
+    <div class="col py-5 col-md-8 offset-md-1">
+      <div class="container-fluid">
+          <h3 class="text-decoration-underline tect">Ajouter un Groupe</h3>
+          <br>
+            <form action="" method="post">{% csrf_token %}
+                {{ form.as_p }}
+              <div class="text-center">
+                <input type="submit" class= "btn btn-primary btn-block" value="Ajouter" />
+              </div>
+            </form>
+      </div>
+    </div>
+    <!-- END Content -->
+  </div>
+</div>
+{% endblock %}

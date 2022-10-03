@@ -1,0 +1,107 @@
+{% extends 'core/base.html' %}
+
+{% load i18n %}
+
+{% load static %}
+{% block title %}Tables Générales{% endblock %}
+
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        <!-- Sidebar -->
+        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white">
+                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-sm-start" id="menu">
+                    <li><hr class="dropdown-divider"></li>
+                    <li class="nav-item">
+                        <div class="dropdown pb-1 pt-1">
+                            <a href="{% url 'tables:essences_list' %}" class="nav-link px-0 align-middle link-secondary">
+                                <img src="{% static 'core/img/essences.png' %}" alt="Essence" width="30" height="30" class="fs-4">
+                                <span class="ms-1 d-none d-sm-inline">Essences</span> </a>
+                        </div>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li class="nav-item">
+                        <div class="dropdown pb-1 pt-1">
+                            <a href="#" class="nav-link align-middle px-0 link-secondary text-decoration-none dropdown-toggle" id="submenu1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="{% static 'core/img/foret.png' %}" alt="Chantiers" width="30" height="30" class="fs-4">
+                                <span class="ms-1 d-none d-sm-inline">Chantiers</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="submenu1">
+                                <li><a class="dropdown-item" href="#">UFA</a></li>
+                                <li><a class="dropdown-item" href="#">VC</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Divers</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li class="nav-item">
+                        <div class="dropdown pb-1 pt-1">
+                            <a href="#" class="nav-link align-middle px-0 link-secondary text-decoration-none dropdown-toggle" id="submenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="{% static 'core/img/transport.png' %}" alt="Transports" width="30" height="30" class="fs-4">
+                                <span class="ms-1 d-none d-sm-inline">Transports</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="submenu2">
+                                <li><a class="dropdown-item" href="#">Internes</a></li>
+                                <li><a class="dropdown-item" href="#">Externes</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Fluvial</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li class="nav-item">
+                        <div class="dropdown pb-1 pt-1">
+                            <a href="#" class="nav-link align-middle px-0 link-secondary text-decoration-none dropdown-toggle" id="submenu3" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="{% static 'core/img/production.png' %}" alt="Production" width="30" height="30" class="fs-4">
+                                <span class="ms-1 d-none d-sm-inline">Production</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="submenu3">
+                                <li><a class="dropdown-item" href="#">Forêt</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Scierie</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Produits Finis</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Contre-Plaqué</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li class="nav-item">
+                        <div class="dropdown pb-1 pt-1">
+                            <a href="#" class="nav-link px-0 align-middle link-secondary">
+                                <img src="{% static 'core/img/export.png' %}" alt="Commercial" width="30" height="30" class="fs-4">
+                                <span class="ms-1 d-none d-sm-inline">Commercial</span> </a>
+                        </div>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                </ul>
+                <hr>
+            </div>
+        </div>
+        <!-- END Sidebar -->
+
+        <!-- Content -->
+        <div class="col py-5 col-md-4 offset-md-1">
+            <h3 class="text-decoration-underline">Menu des Tables Générales</h3>
+            <br>
+            <ul class="list-unstyled">
+                <li><h5>Essences</h5> Gestion des Essences, Familles, Noms Scientifiques, Densité, etc...</li>
+                <br>
+                <li><h5>Chantiers</h5> Gestion des UFA et VC</li>
+                <br>
+                <li><h5>Transports</h5> Gestion des divers types de Transports, Transporteurs</li>
+                <br>
+                <li><h5>Production</h5> Paramètres généraux pour la Forêt, Scierie, Autres Produits</li>
+                <br>
+                <li><h5>Commercial</h5> Paramètres généraux pour les Clients, Destinations, TVA, Douanes, etc ...</li>
+            </ul>
+        </div>
+        <!-- END Content -->
+    </div>
+</div>
+{% endblock %}

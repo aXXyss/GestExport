@@ -1,0 +1,84 @@
+{% extends 'core/base.html' %}
+
+{% load static %}
+{% block title %}Réceptionner un Transport{% endblock %}
+
+{% block breadcrumbs %}
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #c9cdd2;">
+      <div class="container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#state" aria-controls="state" aria-expanded="false">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="state">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'douala:douala' %}">&rsaquo; &nbsp; Douala</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'douala:transports' %}">&rsaquo; &nbsp; Réceptions</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'douala:recep_trans_list' %}">&rsaquo; &nbsp; Sciages</a>
+              </li>
+                <li class="nav-item">
+                    <a class="nav-link" > &rsaquo; &nbsp; Réception</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link link-secondary" href="{% url 'douala:recep_trans_list' %}"> | <i>Liste des Réceptions</i> | </a>
+                </li>
+            </ul>
+        </div>
+      </div>
+    </nav>
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+  <div class="row flex-nowrap">
+    <!-- Sidebar -->
+    <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+      <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white">
+          <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-sm-start" id="menu">
+              <li><hr class="dropdown-divider"></li>
+              <li class="nav-item">
+                  <div class="dropdown pb-1 pt-1">
+                      <a href="{% url 'douala:recep_trans_list' %}" class="nav-link align-middle px-0 link-secondary">
+                          <img src="{% static 'core/img/transport.png' %}" alt="Liste Réception Sciages" width="30" height="30" class="fs-4">
+                          <span class="ms-1 d-none d-sm-inline">Liste des Réceptions</span>
+                      </a>
+                  </div>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+          </ul>
+          <hr>
+      </div>
+  </div>
+    <!-- END Sidebar -->
+
+    <!-- Content -->
+
+    <div class="col py-5 col-md-8 offset-md-1">
+      <div class="container-fluid">
+          <h3 class="text-decoration-underline tect">Créer une Réception d'un Transport de Sciages</h3>
+          <br>
+          <div class="form-group">
+            <form action="" method="post">
+              {% csrf_token %}
+              {{ form.as_p }}
+              <div class="text-center">
+                <input type="submit" class= "btn btn-primary btn-block" style="width: 100px;" value="Ajouter" />
+              </div>
+            </form>
+          </div>
+      </div>
+    </div>
+    <!-- END Content -->
+  </div>
+</div>
+{% endblock %}

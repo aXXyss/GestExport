@@ -1,0 +1,98 @@
+{% extends 'core/base.html' %}
+
+{% load i18n %}
+
+{% load static %}
+{% block title %}Home{% endblock %}
+{% block content %}
+
+<div class="container-fluid">
+  <div class="row flex-nowrap">
+    <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+        <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white">
+           <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-sm-start" id="menu">
+              <li><hr class="dropdown-divider"></li>
+              <li class="nav-item">
+                  <div class="dropdown pb-1 pt-1">
+                      <a  href="{% url 'home' %}" class="nav-link align-middle px-0 link-secondary">
+                          <img src="{% static 'core/img/home.png' %}" alt="Home" width="30" height="30" class="fs-4">
+                          <span class="ms-1 d-none d-sm-inline">Home</span>
+                      </a>
+                  </div>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li class="nav-item">
+                  <div class="dropdown pb-1 pt-1">
+                      <a  href="#" class="nav-link align-middle px-0 link-secondary disabled">      <!-- option 'disabled' for the link -->
+                          <img src="{% static 'core/img/chantiers.png' %}" alt="Prospection" width="30" height="30" class="fs-4">
+                          <span class="ms-1 d-none d-sm-inline">Prospections</span>
+                      </a>
+                  </div>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li class="nav-item">
+                  <div class="dropdown pb-1 pt-1">
+                      <a  href="#" class="nav-link align-middle px-0 link-secondary disabled">      <!-- option 'disabled' for the link -->
+                          <img src="{% static 'core/img/foret.png' %}" alt="Forêt" width="30" height="30" class="fs-4">
+                          <span class="ms-1 d-none d-sm-inline">Forêt</span>
+                      </a>
+                  </div>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li class="nav-item">
+                  <div class="dropdown pb-1 pt-1">
+                      <a  href="#" class="nav-link align-middle px-0 link-secondary disabled">      <!-- option 'disabled' for the link -->
+                          <img src="{% static 'core/img/essences.png' %}" alt="Grumes" width="30" height="30" class="fs-4">
+                          <span class="ms-1 d-none d-sm-inline">Grumes</span>
+                      </a>
+                  </div>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li class="nav-item">
+                  <div class="dropdown pb-1 pt-1">
+                      <a  href="#" class="nav-link align-middle px-0 link-secondary disabled">      <!-- option 'disabled' for the link -->
+                          <img src="{% static 'core/img/production.png' %}" alt="Production" width="30" height="30" class="fs-4">
+                          <span class="ms-1 d-none d-sm-inline">Sciages</span>
+                      </a>
+                  </div>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li class="nav-item">
+                  <div class="dropdown pb-1 pt-1">
+                    <a  href="{% url 'douala:douala' %}" class="nav-link align-middle px-0 link-secondary">     
+                        <img src="{% static 'core/img/export.png' %}" alt="Douala" width="30" height="30" class="fs-4">
+                        <span class="ms-1 d-none d-sm-inline">Douala</span>
+                    </a>
+                  </div>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li class="nav-item">
+                  <div class="dropdown pb-1 pt-1">
+                      <a  href="#" class="nav-link align-middle px-0 link-secondary disabled">      <!-- option 'disabled' for the link -->
+                          <img src="{% static 'core/img/inventaires.png' %}" alt="Inventaires" width="30" height="30" class="fs-4">
+                          <span class="ms-1 d-none d-sm-inline">Inventaires</span>
+                      </a>
+                  </div>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+            </ul>
+        </div>
+    </div>
+    <div class="col py-5 col-md-4 offset-md-1">
+      <h3 class="text-decoration-underline">Menu Principal</h3>
+        <br>
+        <ul class="list-unstyled">
+          <li><h5>APPLICATION POUR LA GESTION D'EXPLOITATION DES FORÊTS</h5>Prospections, Géoréférencement, Abattages, Débardages, Préparations Parcs, Transports vers les sites de production </li>
+          <br>
+          <li><h5>TRANSFORMATION DU BOIS</h5>Contrats de Sciages ou Export Grumes, Tronçonnages en billons, Sciages, Séchages, Produits Finis, Contre-Plaqué</li>
+          <br>
+          <li><h5>EXPORTATIONS</h5>Transports Débités ou Grumes, Documents d'exportations, Phytosanitaire, Transit</li>
+          <br>
+          <li><h5>FACTURATION</h5>Facturation clients export ou locaux</li>
+          <br>
+          <li><h5>STATISTIQUES</h5>Divers documents</li>
+        </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}

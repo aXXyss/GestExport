@@ -1,0 +1,159 @@
+{% extends 'core/base.html' %}
+
+{% load i18n %}
+
+{% load static %}
+{% block title %}Détail Du Transport{% endblock %}
+
+{% block breadcrumbs %}
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #c9cdd2;">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#state" aria-controls="state" aria-expanded="false">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="state">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'douala:douala' %}">&rsaquo; &nbsp; Douala</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'douala:transports' %}">&rsaquo; &nbsp; Transports</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'betou:transport_list' %}">&rsaquo; &nbsp; Sciages</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" > &rsaquo; &nbsp; Détail du Transport</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+
+                <li class="nav-item">
+                    <a class="nav-link link-secondary" href="{% url 'betou:transport_list' %}"> | <i>Liste des Transports Sciages</i> | </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    </nav>
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        <!-- Sidebar -->
+        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white">
+                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-sm-start" id="menu">
+                    <li><hr class="dropdown-divider"></li>
+                    <li class="nav-item">
+                        <div class="dropdown pb-1 pt-1">
+                            <a href="{% url 'betou:transport_list' %}" class="nav-link px-0 align-middle link-secondary">
+                                <img src="{% static 'core/img/transport.png' %}" alt="Douala" width="30" height="30" class="fs-4">
+                                <span class="ms-1 d-none d-sm-inline">Liste des Transports Sciages</span> </a>
+                        </div>
+                    </li>
+                    
+                    <li><hr class="dropdown-divider"></li>
+                </ul>
+                <hr>
+            </div>
+        </div>
+        <!-- END Sidebar -->
+
+        <!-- Content -->
+        <div class="col py-5 col-md-8 offset-md-1">
+            <div class="container-fluid">
+                <h3 class="text-decoration-underline">Détail du Transport de Colis de Sciages</h3>
+                <br>
+                
+                {% regroup contrats|dictsort:"num_contrat" by num_contrat as lst_group %}
+
+                    <table class="table table-responsive table-bordered text-center">
+                        {% for group_ct in lst_group %} 
+
+                            <thead>
+                                <tr>
+                                    <td colspan = "15" class="align-center" style="font-weight: 600">{{ group_ct.grouper }}</td>
+                                </tr>
+
+                                <tr>
+                                    <th>N.Contrat</th>
+                                    <th>Essence</th>
+                                    <th>Epais.</th>
+                                    <th>N.Colis</th>
+                                    <th>Nb Elts</th>
+                                    <th>Volume</th>
+                                    <th>Qualité</th>
+                                    <th>Produit</th>
+                                    <th>Specif</th>
+                                    <th>Specif Douane</th>
+                                    <th>Destinataire</th>
+                                    <th>Destination</th>
+                                    <th>Marque</th>
+                                    <th>Réceptionnaire</th>
+                                    <th>Code Trans</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                    {% for trans in group_ct.list %}
+                                        <tr>
+                                            <td>{{trans.num_contrat|default_if_none:""}}</td>
+                                            <td>{{trans.essence}}</td>
+                                            <td>{{trans.epaisseur}}</td>
+                                            <td>{{trans.num_colis}}</td>
+                                            <td style="text-align: right;">{{trans.nb_elts}}</td>
+                                            <td style="text-align: right;">{{trans.volumecolis}}</td>
+                                            <td>{{trans.qualite|default_if_none:""}}</td>
+                                            <td>{{trans.produit|default_if_none:""}}</td>
+                                            <td >{{trans.num_contrat}}&nbsp{{trans.code_specif}}</td>
+                                            <td>{{trans.code_specif_douane|default_if_none:""}}</td>
+                                            <td>{{trans.destinataire|default_if_none:""}}</td>
+                                            <td>{{trans.port_destination|default_if_none:""}}</td>
+                                            <td>{{trans.marque|default_if_none:""}}</td>
+                                            <td>{{trans.receptionnaire|default_if_none:""}}</td>
+                                            <td><a href="{% url 'betou:transport_codetrans' trans.code_trans %}" class="link text-secondary">{{trans.code_trans}}</a> {% if not forloop.last %}{% endif %}</td>
+                                        </tr>
+                                    {% endfor %}
+
+                           
+                                    <tr>
+                                        <td colspan = "3" style="text-align: center; font-weight: 600;">TOTAUX:</td>
+                                        <td style="text-align: right; font-weight: 600;">{{ group_ct.list|length }} Colis</td>
+                                        <td style="text-align: right; font-weight: 600;">{{ nbreelts }}</td>
+                                        <td style="text-align: right; font-weight: 600;"> {{ subtotal }}</td>  
+                                        <td colspan = "12"></td>
+                                    </tr>  
+                      
+                  
+                                {% endfor %}
+
+                                {% if not page_obj.has_next %}
+                                    <tr>
+                                        <td colspan = "3" style="text-align: center; font-weight: 600;">TOTAUX:</td>
+                                        <td style="text-align: right; font-weight: 600;">{{ nbrecolis }} Colis</td>
+                                        <td style="text-align: right; font-weight: 600;">{{ totalelts }}</td>
+                                        <td style="text-align: right; font-weight: 600;"> {{ totalvolume }}</td>
+                                        <td colspan = "12"></td>
+                                    </tr>
+                                {% endif %}
+                            </tbody>
+                    </table>
+
+                <!-- Menú de paginación -->
+                {% if is_paginated %}
+                    <div id="content-pagination">
+                        {% include 'core/_pagination.html' with page_obj=page_obj %}  
+                    </div>
+                {% endif %}  
+            </div>
+            
+        </div>
+        <!-- END Content -->
+    </div>
+</div>
+{% endblock %}
