@@ -49,7 +49,7 @@
                     <hr>
                     <li class="nav-item">
                         <div class="dropdown pb-1 pt-1">
-                            <a href="#" class="nav-link align-middle px-0 link-secondary">
+                            <a href="{% url 'douala:stock_roulant_contrats' %}" class="nav-link align-middle px-0 link-secondary">
                                 <img src="{% static 'core/img/stocks.png' %}" alt="Stock Roulant Sciages par Contrats" width="30" height="30" class="fs-4">
                                 <span class="ms-1 d-none d-sm-inline">Par Contrats</span>
                             </a>
@@ -58,7 +58,7 @@
                     <li><hr class="dropdown-divider"></li>
                     <li class="nav-item">
                         <div class="dropdown pb-1 pt-1">
-                            <a href="{% url 'douala:stock_roulant_contrats_detail' %}" class="nav-link align-middle px-0 link-secondary">
+                            <a href="#" class="nav-link align-middle px-0 link-secondary">
                                 <img src="{% static 'core/img/stocks.png' %}" alt="Stock Roulant Sciages par Contrats Détaillé" width="30" height="30" class="fs-4">
                                 <span class="ms-1 d-none d-sm-inline">Par Contrats Détaillé</span>
                             </a>
@@ -92,50 +92,80 @@
         <!-- Content -->
         <div class="col py-5 col-md-8 offset-md-1">
             <div class="container-fluid">
-                <h3 class="text-decoration-underline">Stock Roulant de Colis de Sciages par Contrat</h3>
+                <h3 class="text-decoration-underline">Stock Roulant de Colis de Sciages par Contrat Détaillé</h3>
                 <br>
                 
-                <table class="table table-responsive table-bordered text-center">
-                    <thead>
+                    <table class="table table-responsive table-bordered text-center">
+                        {% for ct in i_contrats_list %}
                         
-                           
+                            <thead>
+                                <tr>
+                                    <td colspan = "15" class="align-center" style="font-weight: 600">{{ ct.num_contrat }}</td>
+                                </tr>
+                                 <tr>
+                                <tr>
+                                    <th>N.Contrat</th>
+                                    <th>Essence</th>
+                                    <th>Epais.</th>
+                                    <th>N.Colis</th>
+                                    <th>Nb Elts</th>
+                                    <th>Volume</th>
+                                    <th>Qualité</th>
+                                    <th>Produit</th>
+                                    <th>Specif</th>
+                                    <th>Specif Douane</th>
+                                    <th>Destinataire</th>
+                                    <th>Destination</th>
+                                    <th>Marque</th>
+                                    <th>Réceptionnaire</th>
+                                    <th>Code Trans</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            {% for trans in ct.contrat_with_cubage %}
+                                <tr>
+                                    <td>{{trans.num_contrat|default_if_none:""}}</td>
+                                    <td>{{trans.essence}}</td>
+                                    <td>{{trans.epaisseur}}</td>
+                                    <td>{{trans.num_colis}}</td>
+                                    <td style="text-align: right;">{{trans.nbeltscolis}}</td>
+                                    <td style="text-align: right;">{{trans.volumecolis}}</td>
+                                    <td>{{trans.qualite|default_if_none:""}}</td>
+                                    <td>{{trans.produit|default_if_none:""}}</td>
+                                    <td >{{trans.num_contrat}}&nbsp{{trans.code_specif}}</td>
+                                    <td>{{trans.code_specif_douane|default_if_none:""}}</td>
+                                    <td>{{trans.destinataire|default_if_none:""}}</td>
+                                    <td>{{trans.port_destination|default_if_none:""}}</td>
+                                    <td>{{trans.marque|default_if_none:""}}</td>
+                                    <td>{{trans.receptionnaire|default_if_none:""}}</td>
+                                    <td><a href="{% url 'betou:transport_codetrans' trans.code_trans %}" class="link text-secondary">{{trans.code_trans}}</a> {% if not forloop.last %}{% endif %}</td>
+                                </tr>
+                            {% endfor %}
                             <tr>
-                                <th>Num. Contrat</th>
-                                <th>Code Trans</th>
-                                <th>Destination</th>
-                                <th>Nbre Colis</th>
-                                <th>Volume M3</th>
-                            </tr>
-                    </thead>
-                        
-                    <tbody>
-                        {% for ct in transcoliscgdla_list %} 
-                                
-                            <tr>
-                                <td>{{ct.transcoliscgdladet__num_contrat__num_contrat}}</td>
-                                <td><a href="{% url 'betou:transport_codetrans' ct.code_trans %}" class="link text-secondary">{{ct.code_trans}}</a> {% if not forloop.last %}{% endif %}</td>
-                                <td>{{ct.transcoliscgdladet__port_destination}}</td>
-                                <td style="text-align: right;">{{ct.nbrecolis}}</td>
-                                <td style="text-align: right;">{{ct.volumecolis}}</td>
-                            </tr>
-                           
+                                <td colspan = "3" style="text-align: center; font-weight: 600;">TOTAL / CONTRAT:</td>
+                                <td style="text-align: right; font-weight: 600;">{{ ct.nbrect }} Colis</td>
+                                <td style="text-align: right; font-weight: 600;">{{ ct.nbreeltsct }}</td>
+                                <td style="text-align: right; font-weight: 600;"> {{ ct.volumect }}</td>  
+                                <td colspan = "9"></td>
+                            </tr> 
+
                         {% endfor %}
-                        
 
-                            
-                    {% if not page_obj.has_next %}
-                            <tr>
-                                <td style="text-align: right; font-weight: 600;">TOTAUX:</td>
-                                <td style="text-align: center; font-weight: 600;">{{ totaltrans }} Transp.</td>
-                                <td></td>
-                                <td style="text-align: right; font-weight: 600;">{{ totalcolis }}</td>
-                                <td style="text-align: right; font-weight: 600;">{{ totalvolume }}</td>
-                            </tr>
-                    {% endif %}
+                        {% if not page_obj.has_next %}
+                        <tr>
+                            <td colspan = "3" style="text-align: center; font-weight: 600;">TOTAUX:</td>
+                            <td style="text-align: right; font-weight: 600;">{{ totalcolis }} Colis</td>
+                            <td style="text-align: right; font-weight: 600;">{{ totalelts }}</td>
+                            <td style="text-align: right; font-weight: 600;"> {{ totalvolume }}</td>
+                            <td colspan = "8"></td>
+                            <td style="text-align: right; font-weight: 600;"> {{ nbrecamions }} Transport(s)</td>  
+                        </tr>
+                        {% endif %}
 
 
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
 
                 <!-- Menú de paginación -->
                 {% if is_paginated %}

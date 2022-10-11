@@ -28,6 +28,7 @@ urlpatterns = [
 
     # path Stocks Sciages
     path('stocks/sciages/roulant_contrats/', StockRoulantContratsListView.as_view(), name='stock_roulant_contrats'),
+    path('stocks/sciages/roulant_contrats_detail/', StockRoulantContratsDetailListView.as_view(), name='stock_roulant_contrats_detail'),
     path('stocks/sciages/roulant_camions/', StockRoulantCamionsListView.as_view(), name='stock_roulant_camions'),
     path('stocks/sciages/roulant_transporteurs/', StockRoulantTransporteursListView.as_view(), name='stock_roulant_transporteurs'),
 
