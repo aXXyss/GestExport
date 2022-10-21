@@ -97,8 +97,6 @@
                 
                 <table class="table table-responsive table-bordered text-center">
                     <thead>
-                        
-                           
                             <tr>
                                 <th>Num. Contrat</th>
                                 <th>Code Trans</th>
@@ -126,9 +124,9 @@
                     {% if not page_obj.has_next %}
                             <tr>
                                 <td style="text-align: right; font-weight: 600;">TOTAUX:</td>
-                                <td style="text-align: center; font-weight: 600;">{{ totaltrans }} Transp.</td>
+                                <td style="text-align: center; font-weight: 600;">{{ totaltrans }} Tr.</td>
                                 <td></td>
-                                <td style="text-align: right; font-weight: 600;">{{ totalcolis }}</td>
+                                <td style="text-align: right; font-weight: 600;">{{ totalcolis }} Co.</td>
                                 <td style="text-align: right; font-weight: 600;">{{ totalvolume }}</td>
                             </tr>
                     {% endif %}

@@ -109,7 +109,7 @@
                                     <th>Epais.</th>
                                     <th>N.Colis</th>
                                     <th>Nb Elts</th>
-                                    <th>Volume</th>
+                                    <th>Vol. (M3)</th>
                                     <th>Qualité</th>
                                     <th>Produit</th>
                                     <th>Specif</th>
@@ -144,7 +144,7 @@
                             {% endfor %}
                             <tr>
                                 <td colspan = "3" style="text-align: center; font-weight: 600;">TOTAL / CONTRAT:</td>
-                                <td style="text-align: right; font-weight: 600;">{{ ct.nbrect }} Colis</td>
+                                <td style="text-align: right; font-weight: 600;">{{ ct.nbrect }} Co.</td>
                                 <td style="text-align: right; font-weight: 600;">{{ ct.nbreeltsct }}</td>
                                 <td style="text-align: right; font-weight: 600;"> {{ ct.volumect }}</td>  
                                 <td colspan = "9"></td>
@@ -155,11 +155,11 @@
                         {% if not page_obj.has_next %}
                         <tr>
                             <td colspan = "3" style="text-align: center; font-weight: 600;">TOTAUX:</td>
-                            <td style="text-align: right; font-weight: 600;">{{ totalcolis }} Colis</td>
+                            <td style="text-align: right; font-weight: 600;">{{ totalcolis }} Co.</td>
                             <td style="text-align: right; font-weight: 600;">{{ totalelts }}</td>
                             <td style="text-align: right; font-weight: 600;"> {{ totalvolume }}</td>
                             <td colspan = "8"></td>
-                            <td style="text-align: right; font-weight: 600;"> {{ nbrecamions }} Transport(s)</td>  
+                            <td style="text-align: right; font-weight: 600;"> {{ nbrecamions }} Tr.</td>  
                         </tr>
                         {% endif %}
 

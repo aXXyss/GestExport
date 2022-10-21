@@ -23,7 +23,7 @@
                     <a class="nav-link" href="{% url 'douala:transports' %}">&rsaquo; &nbsp; Transports</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" > &rsaquo; &nbsp; Sciages</a>
+                    <a class="nav-link" > &rsaquo; &nbsp; Bétou - Douala</a>
                 </li>
             </ul>
             <ul class="navbar-nav">
@@ -45,6 +45,9 @@
         <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
             <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white">
                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-sm-start" id="menu">
+                    <hr>                   
+                    <li><hr>B E T O U &nbsp;&nbsp; ---> &nbsp;&nbsp; D O U A L A<hr></li>
+                    <hr>
                     <li><hr class="dropdown-divider"></li>
                     <li class="nav-item">
                         <div class="dropdown pb-1 pt-1">
@@ -71,7 +74,7 @@
         <!-- Content -->
         <div class="col py-5 col-md-8 offset-md-1">
             <div class="container-fluid"></div>
-                <h3 class="text-decoration-underline">Liste des Transports de Colis de Sciages par Camion entre Bétou et Douala</h3>
+                <h3 class="text-decoration-underline">Liste des Transports de Colis de Sciages</h3>
                 <br>
                 <table class="table table-responsive table-bordered">
                     <thead>
@@ -82,6 +85,7 @@
                             <th>Transporteur</th>
                             <th>Adresse</th>
                             <th>Immatriculation</th>
+                            <th>Départ</th>
                             <th>Destination</th>
                             <th>Nbre Colis</th>
                             <th>Volume M3</th>
@@ -97,6 +101,7 @@
                                 <td>{{trans.transporteur}}</td>
                                 <td>{{trans.transporteur_ville}}-{{trans.transporteur_pays}}</td>
                                 <td>{{trans.immatr_camion}}</td>
+                                <td>{{trans.depart_transport}}</td>
                                 <td>{{trans.dest_transport}}</td>
                                 <td style="text-align: right;">{{trans.nbrecolis}}</td>
                                 <td style="text-align: right;">{{trans.volumecolis}}</td>
@@ -108,7 +113,7 @@
 
                     {% if not page_obj.has_next %}
                             <tr>
-                                <td colspan = "6" style="text-align: right; font-weight: 600;">TOTAUX:</td>
+                                <td colspan = "7" style="text-align: right; font-weight: 600;">TOTAUX:</td>
                                 <td style="text-align: center; font-weight: 600;">{{ totaltrans }} Transp.</td>
                                 <td style="text-align: right; font-weight: 600;">{{ totalcolis }}</td>
                                 <td style="text-align: right; font-weight: 600;">{{ totalvolume }}</td>

@@ -45,7 +45,9 @@ DEBUG = True
 ALLOWED_HOSTS = ['0.0.0.0:8000','localhost','127.0.0.1','192.168.1.50']  # iniciar el servidor con runserver 0.0.0.0:8000 para un acceso desde una máquina en la misma red
 
 
-# Application definition
+# Cierra la sesión cuando se cierra el navegador
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
 
 INSTALLED_APPS = [
     'registration',

@@ -46,12 +46,8 @@
                                 <img src="{% static 'core/img/transport.png' %}" alt="Réceptions de Transports Sciages" width="30" height="30" class="fs-4">
                                 <span class="ms-1 d-none d-sm-inline">Transports Sciages</span> 
                             </a>
-
                             <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="submenu1">
-                                <li><a class="dropdown-item" href="{% url 'betou:transport_list' %}">Liste des Transports</a></li>
-                                <li><hr class="dropdown-divider"></li>
-
-                                <li><a class="dropdown-item" href="{% url 'betou:transport_a_recep' %}">Transports à Réceptionner</a></li>
+                                <li><a class="dropdown-item" href="{% url 'betou:transport_a_recep' %}">Transports En Route</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="{% url 'douala:recep_trans_list' %}">Réception Transports</a></li>
                                 <li><hr class="dropdown-divider"></li>

@@ -23,7 +23,7 @@
                     <a class="nav-link" href="{% url 'douala:stocks' %}">&rsaquo; &nbsp; Stocks</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" > &rsaquo; &nbsp; Grumes</a>
+                    <a class="nav-link" > &rsaquo; &nbsp; Grumes Roulant</a>
                 </li>
             </ul>
             <ul class="navbar-nav">
@@ -44,12 +44,21 @@
         <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
             <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white">
                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-sm-start" id="menu">
-                    <li><hr class="dropdown-divider"></li>
-                    <li><hr>Stock Roulant<hr></li>
-                    <li><hr class="dropdown-divider"></li>
+                    <hr>
+                    <li><hr>S T O C K &nbsp;&nbsp; R O U L A N T<hr></li>
+                    <hr>
                     <li class="nav-item">
                         <div class="dropdown pb-1 pt-1">
                             <a href="{% url 'douala:stock_roulant_gr_contrats' %}" class="nav-link align-middle px-0 link-secondary">
+                                <img src="{% static 'core/img/stocks.png' %}" alt="Stock Roulant Sciages par Contrats" width="30" height="30" class="fs-4">
+                                <span class="ms-1 d-none d-sm-inline">Par Contrats</span>
+                            </a>
+                        </div>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li class="nav-item">
+                        <div class="dropdown pb-1 pt-1">
+                            <a href="{% url 'douala:stock_roulant_gr_contrats_detail' %}" class="nav-link align-middle px-0 link-secondary">
                                 <img src="{% static 'core/img/stocks.png' %}" alt="Stock Roulant Sciages par Contrats" width="30" height="30" class="fs-4">
                                 <span class="ms-1 d-none d-sm-inline">Par Contrats Détaillé</span>
                             </a>
@@ -99,7 +108,7 @@
                                     <th>Date Transport</th>
                                     <th>Immatriculation</th>
                                     <th>Destination</th>
-                                    <th>Nbre Colis</th>
+                                    <th>Nbre Grume(s)</th>
                                     <th>Volume M3</th>
                                 </tr>
                             </thead>
@@ -119,7 +128,7 @@
                                 <tr>
                                     <td colspan = "4" style="text-align: right; font-weight: 600;">TOTAL / TRANSPORTEUR:</td>
                                     <td style="text-align: right; font-weight: 600;">{{ ct.trans_with_cubage|length }} Transp.</td>
-                                    <td style="text-align: right; font-weight: 600;">{{ ct.stnbregrumes }} Colis</td>
+                                    <td style="text-align: right; font-weight: 600;">{{ ct.stnbregrumes }} Grume(s)</td>
                                     <td style="text-align: right; font-weight: 600;"> {{ ct.stvolumegrumes }}</td> 
                                 </tr>
 

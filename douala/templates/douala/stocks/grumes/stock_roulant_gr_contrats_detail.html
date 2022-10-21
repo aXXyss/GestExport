@@ -3,7 +3,7 @@
 {% load i18n %}
 
 {% load static %}
-{% block title %}Stock Roulant par Camions Grumes{% endblock %}
+{% block title %}Stock Roulant Grumes par Contrat Détaillé{% endblock %}
 
 {% block breadcrumbs %}
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #c9cdd2;">
@@ -59,7 +59,7 @@
                     <li><hr class="dropdown-divider"></li>
                     <li class="nav-item">
                         <div class="dropdown pb-1 pt-1">
-                            <a href="{% url 'douala:stock_roulant_gr_contrats_detail' %}" class="nav-link align-middle px-0 link-secondary">
+                            <a href="#" class="nav-link align-middle px-0 link-secondary">
                                 <img src="{% static 'core/img/stocks.png' %}" alt="Stock Roulant Sciages par Contrats" width="30" height="30" class="fs-4">
                                 <span class="ms-1 d-none d-sm-inline">Par Contrats Détaillé</span>
                             </a>
@@ -68,7 +68,7 @@
                     <li><hr class="dropdown-divider"></li>
                     <li class="nav-item">
                         <div class="dropdown pb-1 pt-1">
-                            <a href="#" class="nav-link align-middle px-0 link-secondary">
+                            <a href="{% url 'douala:stock_roulant_gr_camions' %}" class="nav-link align-middle px-0 link-secondary">
                                 <img src="{% static 'core/img/stocks.png' %}" alt="Stock Roulant Sciages par Camions " width="30" height="30" class="fs-4">
                                 <span class="ms-1 d-none d-sm-inline">Par Camions</span>
                             </a>
@@ -92,64 +92,89 @@
 
         <!-- Content -->
         <div class="col py-5 col-md-8 offset-md-1">
-            <div class="container-fluid"></div>
-                <h3 class="text-decoration-underline">Stock Roulant de Grumes par Camions</h3>
+            <div class="container-fluid">
+                <h3 class="text-decoration-underline">Stock Roulant de Grumes par Contrat Détaillé</h3>
                 <br>
-                <table class="table table-responsive table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Code Trans</th>
-                            <th>Numéro Manuel</th>
-                            <th>Date Transport</th>
-                            <th>Transporteur</th>
-                            <th>Adresse</th>
-                            <th>Immatriculation</th>
-                            <th>Destination</th>
-                            <th>Nbre Grumes</th>
-                            <th>Volume M3</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {%if transgrumescgdla_list%}
-                        {% for trans in transgrumescgdla_list %}
-                            <tr>
-                                <td><a href="{% url 'betou:detail_gr_transport' trans.code_trans %}" class="link text-secondary">{{trans.code_trans}}</a> {% if not forloop.last %}{% endif %}</td>
-                                <td>{{trans.num_trans_grumes_man}}</td>
-                                <td>{{trans.date_trans_grumes}}</td>
-                                <td>{{trans.transporteur}}</td>
-                                <td>{{trans.transporteur_ville}}-{{trans.transporteur_pays}}</td>
-                                <td>{{trans.immatr_camion}}</td>
-                                <td>{{trans.dest_transport}}</td>
-                                <td style="text-align: right;">{{trans.nbregrumes}}</td>
-                                <td style="text-align: right;">{{trans.volumegrumes}}</td>
-                            </tr>
-                        {% endfor %}
-                    {%else%}
-                        <h1>Il n'y a pas d'enregistrements</h1>
-                    {%endif%}
+                
+                    <table class="table table-responsive table-bordered text-center">
+                        {% for ct in i_contrats_gr_list %}
+                            <thead>
+                                <tr>
+                                    <td colspan = "15" class="align-center" style="font-weight: 600">{{ ct.num_contrat_gr }}</td>
+                                </tr>
+                                 <tr>
+                                <tr>
+                                    <th>N.Contrat</th>
+                                    <th>Essence</th>
+                                    <th>N. Grume</th>
+                                    <th>Long.</th>
+                                    <th>Dia.</th>
+                                    <th>Vol. M3</th>
+                                    <th>Qualité</th>
+                                    <th>Specif</th>
+                                    <th>Specif Douane</th>
+                                    <th>Destinataire</th>
+                                    <th>Destination</th>
+                                    <th>Marque</th>
+                                    <th>Réceptionnaire</th>
+                                    <th>Code Trans</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                       
+                            {% for trans in ct.contrat_with_cubage %}
+                                <tr>
+                                    <td>{{trans.num_contrat|default_if_none:""}}</td>
+                                    <td>{{trans.essence}}</td>
+                                    <td>{{trans.num_bille}}</td>
+                                    <td style="text-align: right;">{{trans.longueur}}</td>
+                                    <td style="text-align: right;">{{trans.diametre}}</td>
+                                    <td style="text-align: right;">{{trans.cubage}}</td>
+                                    <td>{{trans.qualite}}</td>
+                                    <td>{{trans.num_contrat}}&nbsp{{trans.code_specif}}</td>
+                                    <td>{{trans.code_specif_douane|default_if_none:""}}</td>
+                                    <td>{{trans.destinataire|default_if_none:""}}</td>
+                                    <td>{{trans.port_destination|default_if_none:""}}</td>
+                                    <td>{{trans.marque|default_if_none:""}}</td>
+                                    <td>{{trans.receptionnaire|default_if_none:""}}</td>
+                                    <td><a href="{% url 'betou:transport_gr_codetrans' trans.code_trans %}" class="link text-secondary">{{trans.code_trans}}</a> {% if not forloop.last %}{% endif %}</td>
+                                </tr>
+                            {% endfor %}
+                                <tr>
+                                    <td colspan = "2" style="text-align: center; font-weight: 600;">TOTAL / CONTRAT:</td>
+                                    <td style="text-align: right; font-weight: 600;">{{ ct.nbrect }} Gr.</td>
+                                    <td colspan = "2"></td>
+                                    <td style="text-align: right; font-weight: 600;"> {{ ct.volumect }}</td>
+                                    <td colspan = "8"></td>
+                                </tr>
 
-                    {% if not page_obj.has_next %}
-                            <tr>
-                                <td colspan = "6" style="text-align: right; font-weight: 600;">TOTAUX:</td>
-                                <td style="text-align: center; font-weight: 600;">{{ totaltrans }} Transp.</td>
-                                <td style="text-align: right; font-weight: 600;">{{ totalgrumes }}</td>
-                                <td style="text-align: right; font-weight: 600;">{{ totalvolume }}</td>
-                            </tr>
-                    {% endif %}
-                    </tbody>
-                </table>
+                        {% endfor %}
+
+                        {% if not page_obj.has_next %}
+                        <tr>
+                            <td colspan = "2" style="text-align: center; font-weight: 600;">TOTAUX:</td>
+                            <td style="text-align: right; font-weight: 600;">{{ totalgrumes }} Gr.</td>
+                            <td colspan = "2"></td>
+                            <td style="text-align: right; font-weight: 600;"> {{ totalvolume }}</td>
+                            <td colspan = "7"></td>
+                            <td style="text-align: right; font-weight: 600;"> {{ nbrecamions }} Tr.</td>  
+                        </tr>
+                        {% endif %}
+
+                        </tbody>
+                    </table>
 
                 <!-- Menú de paginación -->
                 {% if is_paginated %}
-                <div id="content-pagination">
-                    {% include 'core/_pagination.html' with page_obj=page_obj %}  
-                </div>
+                    <div id="content-pagination">
+                        {% include 'core/_pagination.html' with page_obj=page_obj %}  
+                    </div>
                 {% endif %}  
-                
             </div>
             
         </div>
         <!-- END Content -->
     </div>
 </div>
+
 {% endblock %}

@@ -10,11 +10,16 @@ from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.db.models import Sum, Count, Prefetch
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from betou.models import TransColisCgDla, TransColisCgDlaDet, SpecifColisCgDla, SpecifColisCgDlaDet, TransGrumesCgDla, TransGrumesCgDlaDet, SpecifGrumesCgDla, SpecifGrumesCgDlaDet, I_Contrats, Order, Item, Category
+from django.db.models import Q  # para agregar condiciones AND(&) - OR(|)  en los filtros
+from betou.models import TransColisCgDla, TransColisCgDlaDet, SpecifColisCgDla, SpecifColisCgDlaDet, \
+            TransGrumesCgDla, TransGrumesCgDlaDet, SpecifGrumesCgDla, SpecifGrumesCgDlaDet, I_Contrats, \
+            Order, Item, Category
 
+######################################################################
+#                              DOUALA                                #
+######################################################################
 
-
-# Transport Sciages
+# Transport Sciages 
 class TransportListView(LoginRequiredMixin,ListView):       # (LoginRequiredMixin + login_url) para autentificación en una clase
     login_url = 'admin:login'
     model = TransColisCgDla
@@ -22,14 +27,14 @@ class TransportListView(LoginRequiredMixin,ListView):       # (LoginRequiredMixi
     paginate_by = 15
 
     def get_queryset(self):
-        queryset=TransColisCgDla.objects.only('num_camion').order_by('code_trans')\
+        queryset=TransColisCgDla.objects.only('num_camion').filter(depart_transport__contains="BETOU").order_by('code_trans')\
             .annotate(volumecolis=Sum('transcoliscgdladet__cubage'))\
             .annotate(nbrecolis=Count('transcoliscgdladet__num_colis'))
         return queryset
 
     def get_context_data(self, **kwargs):
         context = super(TransportListView, self).get_context_data(**kwargs)
-        context['codetrans_filter'] = TransColisCgDla.objects.order_by('code_trans')
+        context['codetrans_filter'] = TransColisCgDla.objects.filter(depart_transport__contains="BETOU").order_by('code_trans')
         context['totaltrans'] = context['codetrans_filter'].values('code_trans').aggregate(totaltrans=Count('code_trans')).get('totaltrans')
         context['totalvolume'] = context['codetrans_filter'].values('transcoliscgdladet__cubage').aggregate(totalvolume=Sum('transcoliscgdladet__cubage')).get('totalvolume')
         context['totalcolis'] = context['codetrans_filter'].values('transcoliscgdladet__num_colis').aggregate(totalcolis=Count('transcoliscgdladet__num_colis')).get('totalcolis')
@@ -77,7 +82,7 @@ class TransportDetListView(LoginRequiredMixin,ListView):
         return context
 
 
-# Transport Sciages à Réceptionner
+# Transports Sciages à Réceptionner
 class TransportaRecepListView(LoginRequiredMixin,ListView):       # (LoginRequiredMixin + login_url) para autentificación en una clase
     login_url = 'admin:login'
     model = TransColisCgDla
@@ -85,14 +90,72 @@ class TransportaRecepListView(LoginRequiredMixin,ListView):       # (LoginRequir
     paginate_by = 15
 
     def get_queryset(self):
-        queryset=TransColisCgDla.objects.only('num_camion').order_by('code_trans').filter(receptranssciages__isnull=True)\
+        criterio1=Q(receptranssciages__isnull=True)
+
+        queryset=TransColisCgDla.objects.only('num_camion').order_by('code_trans').filter(criterio1)\
             .annotate(volumecolis=Sum('transcoliscgdladet__cubage'))\
             .annotate(nbrecolis=Count('transcoliscgdladet__num_colis'))
         return queryset
 
     def get_context_data(self, **kwargs):
+        criterio1=Q(receptranssciages__isnull=True)
+
         context = super(TransportaRecepListView, self).get_context_data(**kwargs)
-        context['codetrans_filter'] = TransColisCgDla.objects.filter(receptranssciages__isnull=True).order_by('code_trans')
+        context['codetrans_filter'] = TransColisCgDla.objects.filter(criterio1).order_by('code_trans')
+        context['totaltrans'] = context['codetrans_filter'].values('code_trans').aggregate(totaltrans=Count('code_trans')).get('totaltrans')
+        context['totalvolume'] = context['codetrans_filter'].values('transcoliscgdladet__cubage').aggregate(totalvolume=Sum('transcoliscgdladet__cubage')).get('totalvolume')
+        context['totalcolis'] = context['codetrans_filter'].values('transcoliscgdladet__num_colis').aggregate(totalcolis=Count('transcoliscgdladet__num_colis')).get('totalcolis')
+        return context
+
+# Transports Betou-Douala Sciages à Réceptionner 
+class TransportaRecepCgDlaListView(LoginRequiredMixin,ListView):       # (LoginRequiredMixin + login_url) para autentificación en una clase
+    login_url = 'admin:login'
+    model = TransColisCgDla
+    template_name = "betou/transports/sciages/trans_a_recep_cg_dla.html"
+    paginate_by = 15
+
+    def get_queryset(self):
+        criterio1=Q(receptranssciages__isnull=True)
+        criterio2=Q(depart_transport__contains="BETOU")
+
+        queryset=TransColisCgDla.objects.only('num_camion').order_by('code_trans').filter(criterio1 & criterio2)\
+            .annotate(volumecolis=Sum('transcoliscgdladet__cubage'))\
+            .annotate(nbrecolis=Count('transcoliscgdladet__num_colis'))
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        criterio1=Q(receptranssciages__isnull=True)
+        criterio2=Q(depart_transport__contains="BETOU")
+
+        context = super(TransportaRecepCgDlaListView, self).get_context_data(**kwargs)
+        context['codetrans_filter'] = TransColisCgDla.objects.filter(criterio1 & criterio2).order_by('code_trans')
+        context['totaltrans'] = context['codetrans_filter'].values('code_trans').aggregate(totaltrans=Count('code_trans')).get('totaltrans')
+        context['totalvolume'] = context['codetrans_filter'].values('transcoliscgdladet__cubage').aggregate(totalvolume=Sum('transcoliscgdladet__cubage')).get('totalvolume')
+        context['totalcolis'] = context['codetrans_filter'].values('transcoliscgdladet__num_colis').aggregate(totalcolis=Count('transcoliscgdladet__num_colis')).get('totalcolis')
+        return context
+
+# Transports Bangui-Douala Sciages à Réceptionner 
+class TransportaRecepBgDlaListView(LoginRequiredMixin,ListView):       # (LoginRequiredMixin + login_url) para autentificación en una clase
+    login_url = 'admin:login'
+    model = TransColisCgDla
+    template_name = "betou/transports/sciages/trans_a_recep_cg_dla.html"
+    paginate_by = 15
+
+    def get_queryset(self):
+        criterio1=Q(receptranssciages__isnull=True)
+        criterio2=Q(depart_transport__contains="BANGUI")
+
+        queryset=TransColisCgDla.objects.only('num_camion').order_by('code_trans').filter(criterio1 & criterio2)\
+            .annotate(volumecolis=Sum('transcoliscgdladet__cubage'))\
+            .annotate(nbrecolis=Count('transcoliscgdladet__num_colis'))
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        criterio1=Q(receptranssciages__isnull=True)
+        criterio2=Q(depart_transport__contains="BANGUI")
+
+        context = super(TransportaRecepBgDlaListView, self).get_context_data(**kwargs)
+        context['codetrans_filter'] = TransColisCgDla.objects.filter(criterio1 & criterio2).order_by('code_trans')
         context['totaltrans'] = context['codetrans_filter'].values('code_trans').aggregate(totaltrans=Count('code_trans')).get('totaltrans')
         context['totalvolume'] = context['codetrans_filter'].values('transcoliscgdladet__cubage').aggregate(totalvolume=Sum('transcoliscgdladet__cubage')).get('totalvolume')
         context['totalcolis'] = context['codetrans_filter'].values('transcoliscgdladet__num_colis').aggregate(totalcolis=Count('transcoliscgdladet__num_colis')).get('totalcolis')
@@ -144,6 +207,13 @@ class SpecifDetListView(LoginRequiredMixin,ListView):
         context['totalvolume'] = context['numspecif_filter'].values('cubage').aggregate(totalvolume=Sum('cubage')).get('totalvolume')
         context['totalelts'] = context['numspecif_filter'].values('nbre_elts').aggregate(totalelts=Sum('nbre_elts')).get('totalelts')
         return context
+
+
+
+
+
+
+
 
 
 # Transport Grumes

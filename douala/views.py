@@ -123,7 +123,13 @@ class StockRoulantContratsListView(LoginRequiredMixin,ListView):
 
 
     def get_queryset(self):
-        queryset=TransColisCgDla.objects.values('transcoliscgdladet__num_contrat','code_trans','transcoliscgdladet__port_destination','transcoliscgdladet__num_contrat__num_contrat').order_by('transcoliscgdladet__num_contrat').filter(receptranssciages__isnull=True)\
+        criterio1=Q(receptranssciages__isnull=True)
+    #    criterio2=Q(dest_transport__contains='DOU')
+
+
+        queryset=TransColisCgDla.objects.values('transcoliscgdladet__num_contrat','code_trans','transcoliscgdladet__port_destination','transcoliscgdladet__num_contrat__num_contrat')\
+                .order_by('transcoliscgdladet__num_contrat')\
+                .filter(criterio1)\
             .annotate(volumecolis=Sum('transcoliscgdladet__cubage'))\
             .annotate(nbrecolis=Count('transcoliscgdladet__num_colis'))\
             .annotate(nbretrans=Count('code_trans'))
@@ -132,8 +138,11 @@ class StockRoulantContratsListView(LoginRequiredMixin,ListView):
 
 
     def get_context_data(self, **kwargs):
+        criterio1=Q(receptranssciages__isnull=True)
+        criterio2=Q(dest_transport__contains='DOUALA')
+
         context = super(StockRoulantContratsListView, self).get_context_data(**kwargs)
-        context['codetrans_filter'] = TransColisCgDla.objects.filter(receptranssciages__isnull=True).order_by('code_trans')
+        context['codetrans_filter'] = TransColisCgDla.objects.filter(criterio1).order_by('code_trans')
         context['totaltrans'] = context['codetrans_filter'].values('code_trans').aggregate(totaltrans=Count('code_trans')).get('totaltrans')
         context['totalvolume'] = context['codetrans_filter'].values('transcoliscgdladet__cubage').aggregate(totalvolume=Sum('transcoliscgdladet__cubage')).get('totalvolume')
         context['totalcolis'] = context['codetrans_filter'].values('transcoliscgdladet__num_colis').aggregate(totalcolis=Count('transcoliscgdladet__num_colis')).get('totalcolis')
@@ -317,8 +326,39 @@ class RecepTransGrumesDelete(LoginRequiredMixin,DeleteView):
 ############################################################################
 class StockRoulantContratsGrListView(LoginRequiredMixin,ListView):
     login_url = 'admin:login'
-    model = I_Contrats_Gr
+    model = TransGrumesCgDla
     template_name = "douala/stocks/grumes/stock_roulant_gr_contrats.html"
+    paginate_by = 15
+
+    def get_queryset(self):
+        queryset=TransGrumesCgDla.objects.values('transgrumescgdladet__num_contrat','code_trans','transgrumescgdladet__port_destination','transgrumescgdladet__num_contrat__num_contrat_gr').order_by('transgrumescgdladet__num_contrat').filter(receptransgrumes__isnull=True)\
+            .annotate(volumegrumes=Sum('transgrumescgdladet__cubage'))\
+            .annotate(nbregrumes=Count('transgrumescgdladet__num_bille'))\
+            .annotate(nbretrans=Count('code_trans'))
+        return queryset
+
+
+    
+    def get_context_data(self, **kwargs):
+        criterio3=Q(id_trans_grumes_cg_dla_id__receptransgrumes__isnull=True)
+        criterio4=Q(receptransgrumes__isnull=True)
+        context = super(StockRoulantContratsGrListView, self).get_context_data(**kwargs)
+
+        context['codetrans_filter'] = TransGrumesCgDlaDet.objects.filter(criterio3).order_by('num_contrat','essence','num_bille')
+        context['totalvolume'] = context['codetrans_filter'].values('cubage').aggregate(totalvolume=Sum('cubage')).get('totalvolume')
+        context['totalgrumes'] = context['codetrans_filter'].values('num_bille').aggregate(totalgrumes=Count('num_bille')).get('totalgrumes')
+        context['camions_filter'] = TransGrumesCgDla.objects.only('code_trans').filter(criterio4).order_by('code_trans')
+        context['nbrecamions'] = context['camions_filter'].aggregate(nbrecamions=Count('code_trans')).get('nbrecamions')
+
+        return context
+
+############################################################################
+#                         Roulant / Contrats / Détaillé                    #
+############################################################################
+class StockRoulantContratsDetailGrListView(LoginRequiredMixin,ListView):
+    login_url = 'admin:login'
+    model = I_Contrats_Gr
+    template_name = "douala/stocks/grumes/stock_roulant_gr_contrats_detail.html"
     paginate_by = 1
 
 
@@ -341,7 +381,7 @@ class StockRoulantContratsGrListView(LoginRequiredMixin,ListView):
     def get_context_data(self, **kwargs):
         criterio3=Q(id_trans_grumes_cg_dla_id__receptransgrumes__isnull=True)
         criterio4=Q(receptransgrumes__isnull=True)
-        context = super(StockRoulantContratsGrListView, self).get_context_data(**kwargs)
+        context = super(StockRoulantContratsDetailGrListView, self).get_context_data(**kwargs)
 
         context['codetrans_filter'] = TransGrumesCgDlaDet.objects.filter(criterio3).order_by('num_contrat','essence','num_bille')
         context['totalvolume'] = context['codetrans_filter'].values('cubage').aggregate(totalvolume=Sum('cubage')).get('totalvolume')

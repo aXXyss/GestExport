@@ -34,6 +34,7 @@ urlpatterns = [
 
     # path Stocks Grumes
     path('stocks/grumes/roulant_contrats/', StockRoulantContratsGrListView.as_view(), name='stock_roulant_gr_contrats'),
+    path('stocks/grumes/roulant_contrats_detail/', StockRoulantContratsDetailGrListView.as_view(), name='stock_roulant_gr_contrats_detail'),
     path('stocks/grumes/roulant_camions/', StockRoulantCamionsGrListView.as_view(), name='stock_roulant_gr_camions'),
     path('stocks/grumes/roulant_transporteurs/', StockRoulantTransporteursGrListView.as_view(), name='stock_roulant_gr_transporteurs'),
 ]
